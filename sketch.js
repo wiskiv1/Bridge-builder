@@ -1,13 +1,97 @@
 /*
 hoeveel px is 1 m in dit spel?
-Fuck it we pakken dat europabrug => die is 55,8 m => 10px per m => 558px (dan hebben we plaats aan de zeikant voor de overs)
+Fuck it we pakken dat Europabrug => die is 55,8 m => 10px per m => 558px (dan hebben we plaats aan de zijkant voor de overs)
 */
 
+// Simuleer code
+/*
+let achtergrond = null;
+let voorgrond = null;
+let brug_kapot = null;
+function preload() {
+    achtergrond = loadImage("/Assets/achtergrond.png");
+    voorgrond = loadImage("/Assets/voorgrond.png");
+    brug_kapot = loadImage("/Assets/kapot.png");
+}
 
-// balk code
+let profiel = null;
+let balk = null;
+let truck = null;
 
+let succes = false; // werkt de brug?
+
+let aantal_vrachtwagens = 2;
+function setup() {
+    createCanvas(800,600);
+
+    profiel = new profile();
+    profiel.addObject(new rect_object(100, 100, 100, 20));
+    profiel.addObject(new rect_object(140, 120, 20, 100));
+    profiel.addObject(new rect_object(100, 220, 100, 20));
+
+    balk = new beam(121, 398, 558, 25, profiel);
+    balk.setStyle({
+        fill: [143, 147, 143],
+        strokeWeight: 0
+    });
+    
+    balk.addLoad(500000 * aantal_vrachtwagens, 279); // camion van 50 ton
+
+    succes = balk.simulate();
+
+    truck = new rect_object(0, 380, 30, 18);
+    truck.setStyle({
+        fill: [102, 0, 204],
+        strokeWeight: 0,
+    });
+}
+
+
+function draw() {
+    background(51);
+
+    push();
+    image(achtergrond, 0, 0);
+
+    if (succes) {
+        balk.show();
+        truck.show();
+        if (truck.posX < width - 35) {
+            truck.posX += 1;
+        }
+    } else {
+        if (truck.posX < width/2 - 15) {
+            balk.show();
+            truck.show();
+            truck.posX += 1;
+        } else {
+            push();
+            image(brug_kapot, 0, 0);
+            truck.posY = 525;
+            truck.show();
+            fill(255, 0, 0);
+            textSize(25);
+            textAlign(CENTER, CENTER);
+            textFont("consolas");
+            text("BRUG KAPOT \n druk op F5 om opnieuw te proberen", width/2, height/2);
+            pop();
+        }
+    }
+
+    image(voorgrond, 0, 0);
+    pop();
+
+}
+*/
+
+// profiel editor code -------------------------------------------------------------------------
+// TODO
+
+// balk code ------------------------------------------------------------------------------
+/*
 let balk = null;
 let profiel = null;
+
 
 function setup() {
     createCanvas(800,600);
@@ -26,12 +110,12 @@ function draw() {
 
     balk.show();
 
-    balk.addLoad(100, 279);
+    balk.addLoad(100000, 279);
 }
+*/
 
 
-/*
-// Profiel Code
+// Profiel Code -------------------------------------------------------------------------
 let beginX = 0;
 let beginY = 0;
 
@@ -81,4 +165,3 @@ function mouseClicked() {
     objects.push(new rect_object(beginX, beginY, mouseX - beginX, mouseY - beginY));
     profiel.addObject(new rect_object(beginX, beginY, mouseX - beginX, mouseY - beginY));
 }
-*/

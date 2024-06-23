@@ -58,11 +58,28 @@ class profile {
         return this.getArea() / 2;
     }
 
+    // punt het verste van de neutrale lijn
+    calculate_thickness(axis) {
+        let thickness = 0;
+
+        for (let i of this.#objects) {
+            thickness += i.get_width(this.y);
+        }
+        
+        return thickness;
+    }
+
     getArea() {
         let temp = 0;
         for (let i of this.#objects) {
             temp += i.area;
         }
         return temp;
+    }
+
+    show() {
+        for (let o of this.#objects) {
+            o.show();
+        }
     }
 }
