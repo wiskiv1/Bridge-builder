@@ -161,7 +161,7 @@ class designer_scene extends Scene {
     overlay = null;
     setup() {
         profiel = new profile();
-
+        
         this.overlay = createGraphics(width, height);
         this.create_overlay();
     }
