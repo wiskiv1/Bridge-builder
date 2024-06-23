@@ -63,9 +63,9 @@ class bridge_scene extends Scene {
     voorgrond = null;
     brug_kapot = null;
     preload() {
-        this.achtergrond = loadImage("/Assets/achtergrond.png");
-        this.voorgrond = loadImage("/Assets/voorgrond.png");
-        this.brug_kapot = loadImage("/Assets/kapot.png");
+        this.achtergrond = loadImage("Assets/achtergrond.png");
+        this.voorgrond = loadImage("Assets/voorgrond.png");
+        this.brug_kapot = loadImage("Assets/kapot.png");
     }
     
     succes = false;
@@ -243,9 +243,9 @@ class intro_scene extends Scene {
     kapot = null;
     voorgrond = null;
     preload() {
-        this.achtergrond = loadImage("/Assets/achtergrond.png");
-        this.kapot = loadImage("/Assets/kapot.png");
-        this.voorgrond = loadImage("/Assets/voorgrond.png");
+        this.achtergrond = loadImage("Assets/achtergrond.png");
+        this.kapot = loadImage("Assets/kapot.png");
+        this.voorgrond = loadImage("Assets/voorgrond.png");
     }
 
     setup() {
