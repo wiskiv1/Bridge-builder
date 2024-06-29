@@ -56,6 +56,8 @@ class profile {
     // oppervlakte boven de neutrale lijn
     calculate_Sy() { // TODO later moet je dit opnieuw en beter doen!
         return this.getArea() / 2;
+        // alles boven de neutrale lijn
+        // elk deel boven de neutrale lijn zijn oppervlakte maal de oppervlakte van zijn neutrale lijn
     }
 
     // punt het verste van de neutrale lijn

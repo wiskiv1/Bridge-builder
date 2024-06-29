@@ -119,6 +119,17 @@ class bridge_scene extends Scene {
                 image(balk.tension_graph, balk.posX, balk.posY);
             }
 
+            if (this.truck.posX >= width - 35) { //
+                push();
+                fill(0, 255, 0);
+                textSize(25);
+                textAlign(CENTER, CENTER);
+                textFont("consolas");
+                text("GEFELICITEERD \n Je burg is sterk genoeg! \n klik om opnieuw te proberen", width/2, height/2);
+                this.done = true;
+                pop();
+            }
+
         } else { // bridg fails
             if (this.truck.posX < width/2 - 15) {
                 balk.show();
@@ -127,6 +138,7 @@ class bridge_scene extends Scene {
                 if (this.truck.posX > balk.posX && this.truck.posX < balk.posX + balk.length) {
                     image(balk.tension_graph, balk.posX, balk.posY, this.truck.posX - balk.posX + 15, balk.height, 0, 0, this.truck.posX - balk.posX + 15, balk.height);
                 }
+
             } else {
             push();
                 image(this.brug_kapot, 0, 0);
@@ -147,8 +159,10 @@ class bridge_scene extends Scene {
     }
 
     mouseClicked() {
-        if (this.done) {
+        if (this.done && !this.succes) { //done but failes
             toneelmeester.setActiveScene(1);
+        } else if (this.done && this.succes) { // done but succeeds
+            toneelmeester.setActiveScene(2);
         }
     }
 }
