@@ -61,9 +61,13 @@ class profile {
 
     // oppervlakte boven de neutrale lijn
     calculate_Sy() { // TODO later moet je dit opnieuw en beter doen!
-        return this.getArea() / 2;
-        // alles boven de neutrale lijn
-        // elk deel boven de neutrale lijn zijn oppervlakte maal de oppervlakte van zijn neutrale lijn
+        let s = 0;
+
+        for (let i of this.#objects) {
+            s += Math.abs(i.calc_Sy(this.y));
+        }
+
+        return s;
     }
 
     // punt het verste van de neutrale lijn
@@ -71,7 +75,7 @@ class profile {
         let thickness = 0;
 
         for (let i of this.#objects) {
-            thickness += i.get_width(this.y);
+            thickness += Math.abs(i.get_width(this.y));
         }
         
         return thickness;

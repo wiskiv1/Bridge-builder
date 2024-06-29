@@ -14,10 +14,5 @@ De kracht berekeningen zijn grotendeels correct, maar er worden wel wat versimpe
 ## TODO
  bepaalde zaken zijn nog niet klaar/kunnen nog beter
 
- - UI in de profiel designer
- - - verschillende materialen
- - - verschillende vormen
- - - undo knop
- - Sy meer correct berekenen (nu wordt dit zeer simplistisch gedaan)
  - profielen met arbitraire vormen toelaten
  - levels toevoegen

@@ -136,7 +136,7 @@ class beam {
         let t = this.profiel.calculate_thickness(this.profiel.y);
         let Area = this.profiel.getArea();
         Ixx = Ixx / pow(this.profielSchaal, 4); // omzetten naar meter
-        Sy = Sy / pow(this.profielSchaal, 2); 
+        Sy = Sy / pow(this.profielSchaal, 3); 
         t = t / this.profielSchaal;
         Area = Area / pow(this.profielSchaal, 2);
 

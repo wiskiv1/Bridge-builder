@@ -65,6 +65,22 @@ class square_object extends object {
 
         return 0;
     }
+
+    calc_Sy(y) {
+        if (this.posY > y && (this.posY + this.size) > y) { //completely below
+            return 0;
+        } else if (this.posY <= y && (this.posY + this.size) <= y) { //completely above
+            return (this.area) * (y - this.neutralAxis)
+
+        } else { // partially above
+            let temp = min(this.posY, this.posY + this.size);
+
+            let opp = (y - temp) * this.size; // Area = Height above line * width
+            let axis = (y - temp) / 2; // neutral axis of Area above y
+
+            return axis*opp;
+        }
+    }
 }
 
 class rect_object extends object {
@@ -90,6 +106,22 @@ class rect_object extends object {
 
         return 0;
     }
+
+    calc_Sy(y) {
+        if (this.posY > y && (this.posY + this.height) > y) { //completely below
+            return 0;
+        } else if (this.posY <= y && (this.posY + this.height) <= y) { //completely above
+            return (this.area) * (y - this.neutralAxis)
+
+        } else { // partially above
+            let temp = min(this.posY, this.posY + this.height);
+
+            let opp = (y - temp) * this.width; // Area = Height above line * width
+            let axis = (y - temp) / 2; // neutral axis of Area above y
+
+            return axis*opp;
+        }
+    }
 }
 
 class circle_object extends object {
@@ -114,5 +146,21 @@ class circle_object extends object {
         }
 
         return 0;
+    }
+
+    calc_Sy(y) {
+        if ((this.posY - this.radius) > y && (this.posY + this.radius) > y) { //completely below
+            return 0;
+        } else if ((this.posY - this.radius) <= y && (this.posY + this.radius) <= y) { //completely above
+            return (this.area) * (y - this.neutralAxis)
+
+        } else { // partially above (circel versimpelen tot een rechthoek)
+            let temp = min(this.posY - this.radius, this.posY + this.radius);
+
+            let opp = (y - temp) * this.radius; // Area = Height above line * width
+            let axis = (y - temp) / 2; // neutral axis of Area above y
+
+            return axis*opp;
+        }
     }
 }
