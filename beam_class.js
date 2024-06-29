@@ -17,28 +17,6 @@ class beam {
 
     tension_graph = null;
 
-    // gewoon staal
-    // density = 7850; // kg / m^3
-    // yield = 260000000; // 260 * 10^6 Pa (N/m^2) (vloeispanning)
-    // price = 1.50 // € per kg
-
-    //gewapend beton
-    density = 2400;
-    yield = 310264078;
-    price = 0.35;
-
-    //hout
-    //density = 745;
-    //yield = 25500000; // 25.5 MPa
-    //price = 1.30;
-
-    //hogesterktestaal
-    // density = 7850;
-    // yield = 690000000; // 690 MPa
-    // price = 2.40;
-    
-
-
     constructor(x, y, l, h, p) {
         this.posX = x;
         this.posY = y;
@@ -47,6 +25,9 @@ class beam {
         this.profiel = p;
 
         this.tension_graph = createGraphics(l, h);
+
+        this.density = materiaal.density;
+        this.yield = materiaal.yield;
     }
 
     addLoad(f, l) { // f = grote van de kracht, l = plaats op de balk

@@ -169,76 +169,184 @@ class bridge_scene extends Scene {
 
 class designer_scene extends Scene {
     constructor() {
-        super()
+        super();
+        profiel = new profile(); //profiel bijhouden voor revisies
+
+        this.tool = "rect";
     }
 
-    overlay = null;
+    graphic = null;
     setup() {
-        profiel = new profile();
-        
-        this.overlay = createGraphics(width, height);
-        this.create_overlay();
+        if (this.graphic == null) {
+            this.graphic = createGraphics(665, 480);
+            this.graphic.stroke(255);
+        }
     }
 
     beginX = 0;
     beginY = 0;
     draw() {
+        background(91);
+
         push();
-        background(51);
+        noStroke();
+        fill(51);
+        rect(120, 45, 665, 480); // draw space
 
         profiel.show();
+        image(this.graphic, 120, 45);
 
+        fill(255);
         if (mouseIsPressed) {
-            rect(this.beginX, this.beginY, mouseX - this.beginX, mouseY - this.beginY);
-            line(this.beginX, this.beginY, mouseX, mouseY);
+            switch (this.tool) {
+                case "rect":
+                    rect(this.beginX, this.beginY, mouseX - this.beginX, mouseY - this.beginY);
+                    break;
+                case "square":
+                    square(this.beginX, this.beginY, mouseX - this.beginX);
+                    break;
+                case "circle":
+                    let difx = mouseX - this.beginX;
+                    let dify = mouseY - this.beginY;
+                    let r = Math.sqrt(difx*difx + dify*dify);
+                    circle(this.beginX, this.beginY, Math.round(2 * r));
+                    break;
+                case "freeS":
+                    this.graphic.strokeWeight(15);
+                    this.graphic.line(mouseX - 120, mouseY - 45, this.beginX - 120, this.beginY - 45);
+                    this.beginX = mouseX;
+                    this.beginY = mouseY;
+                    break;
+                case "freeB":
+                    this.graphic.strokeWeight(40);
+                    this.graphic.line(mouseX - 120, mouseY - 45, this.beginX - 120, this.beginY - 45);
+                    this.beginX = mouseX;
+                    this.beginY = mouseY;
+                    break;
+            }
         }
-
-        image(this.overlay, 0, 0);
         pop();
-    }
 
-    create_overlay() {
-        this.overlay.push();
-        //border
-        this.overlay.fill(91);
-        this.overlay.noStroke();
-        this.overlay.rect(0, 0, 800, 45);
-        this.overlay.rect(0, 525, 800, 75);
-        this.overlay.rect(0, 45, 120, 480);
-        this.overlay.rect(785, 45, 15, 480);
-        this.overlay.fill(0, 0);
-        this.overlay.stroke(0);
-        this.overlay.rect(120, 45, 665, 480);
-        this.overlay.noStroke();
+        //UI
+        push();
+        textSize(30);
+        textAlign(CENTER);
+        textFont("consolas");
+        fill(255);
+        text("Ontwerp het profiel van de brug", width/2, 30);
 
-        this.overlay.textSize(30);
-        this.overlay.textAlign(CENTER);
-        this.overlay.textFont("consolas");
-        this.overlay.fill(255);
-        this.overlay.text("Ontwerp het profiel van de brug", width/2, 30);
+        //buttons ---
+        noStroke();
+        textSize(20);
+        textAlign(LEFT, CENTER);
+        //done
+        fill(51);
+        rect(710, 10, 75, 30);
+        fill(255);
+        text("Done", 720, 25);
+        //rect
+        fill(51);
+        rect(5, 45, 110, 30);
+        fill(255);
+        text("rectangle", 10, 60);
+        //square
+        fill(51);
+        rect(5, 80, 110, 30);
+        fill(255);
+        text("square", 10, 95);
+        //circle
+        fill(51);
+        rect(5, 115, 110, 30);
+        fill(255);
+        text("circle", 10, 130);
+        //freeS
+        fill(51);
+        rect(5, 150, 110, 60);
+        fill(255);
+        text("free draw \nsmall", 10, 180);
+        //freeB
+        fill(51);
+        rect(5, 215, 110, 60);
+        fill(255);
+        text("free draw \nlarge", 10, 245);
+        //gom
+        fill(51);
+        rect(5, 280, 110, 30);
+        fill(255);
+        text("eraser", 10, 295);
 
-        //Butons
-        this.overlay.textSize(20);
-        this.overlay.textAlign(LEFT, CENTER);
-        //done button
-        this.overlay.fill(51);
-        this.overlay.rect(710, 10, 75, 30);
-        this.overlay.fill(255);
-        this.overlay.text("Done", 720, 25);
+        fill(51);
+        //rect(5, 315, 110, 30);
+        fill(255);
+        text("materialen", 5, 330);
+        //gewapend beton
+        fill(51);
+        rect(5, 350, 110, 60);
+        fill(255);
+        text("gewapend \nbeton", 10, 380);
+        //hout
+        fill(51);
+        rect(5, 415, 110, 30);
+        fill(255);
+        text("hout", 10, 430);
+        //staal
+        fill(51);
+        rect(5, 450, 110, 30);
+        fill(255);
+        text("staal", 10, 465);
 
-        // TODO ALLE ANDERE BUTTONS
 
-        this.overlay.pop();
+        //material / profile info: ----------
+        text("Materiaal: " + materiaal.naam, 130, 545);
+        text("Vloeispanning: " + Math.round(materiaal.yield/1000000) + " MPa", 130, 580);
+        let prijs = (profiel.getArea() / 10000) * (558/10) * materiaal.density * materiaal.price;
+        text("Prijs: €" + Math.round(prijs), 450, 545);
+        pop();
     }
 
     mouseClicked() {
         if (mouseX > 120 && mouseX < 785 && mouseY > 45 && mouseY < 525) { // 120, 45, 665, 480
-            profiel.addObject(new rect_object(this.beginX, this.beginY, mouseX - this.beginX, mouseY - this.beginY));
+            switch (this.tool) {
+                case "rect":
+                    profiel.addObject(new rect_object(this.beginX, this.beginY, mouseX - this.beginX, mouseY - this.beginY));
+                    break;
+                case "square":
+                    profiel.addObject(new square_object(this.beginX, this.beginY, mouseX - this.beginX));
+                    break;
+                case "circle":
+                    let difx = mouseX - this.beginX;
+                    let dify = mouseY - this.beginY;
+                    let r = Math.sqrt(difx*difx + dify*dify);
+                    profiel.addObject(new circle_object(this.beginX, this.beginY, Math.round(r)));
+                    break;
+                default:
+                    break;
+            }
         }
 
         //Buttons
         if (mouseX > 710 && mouseX < 785 && mouseY > 10 && mouseY < 40) { // done button
             toneelmeester.setActiveScene(0);
+        } else if (mouseX > 5 && mouseX < 115 && mouseY > 45 && mouseY < 75) { // tools
+            this.tool = "rect";
+        } else if (mouseX > 5 && mouseX < 115 && mouseY > 80 && mouseY < 110) {
+            this.tool = "square";
+        } else if (mouseX > 5 && mouseX < 115 && mouseY > 115 && mouseY < 145) {
+            this.tool = "circle";
+        } else if (mouseX > 5 && mouseX < 115 && mouseY > 150 && mouseY < 210) {
+            //this.tool = "freeS";
+        } else if (mouseX > 5 && mouseX < 115 && mouseY > 215 && mouseY < 275) {
+            //this.tool = "freeB";
+        } else if (mouseX > 5 && mouseX < 115 && mouseY > 280 && mouseY < 310) {
+            //TODO implement eraser
+        }
+
+        else if (mouseX > 5 && mouseX < 115 && mouseY > 350 && mouseY < 410) {
+            materiaal = gewapend_beton;
+        } else if (mouseX > 5 && mouseX < 115 && mouseY > 415 && mouseY < 445) {
+            materiaal = hout;
+        } else if (mouseX > 5 && mouseX < 115 && mouseY > 450 && mouseY < 480) {
+            materiaal = staal;
         }
     }
 
@@ -294,6 +402,7 @@ class intro_scene extends Scene {
 
     mouseClicked() {
         if (mouseX > width/2 - 60 && mouseX < width/2 + 60 && mouseY > height/2 + 20 && mouseY < height/2 + 60)  {
+            profiel = new profile();
             toneelmeester.setActiveScene(1);
         }
     }

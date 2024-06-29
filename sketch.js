@@ -85,7 +85,63 @@ function draw() {
 */
 
 // profiel editor code -------------------------------------------------------------------------
-// TODO
+let beginX = 0;
+let beginY = 0;
+
+let vierkant = null;
+let objects = [];
+
+let profiel = null;
+
+let graphics = null;
+function setup() {
+    createCanvas(800, 600);
+
+    vierkant = new square_object(10, 10, 50);
+    // vierkant.setStyle({
+    //     stroke: [0, 0, 0],
+    //     strokeWeight: 1,
+    //     fill: [255, 255, 255]
+    // });
+
+    graphics = createGraphics(800, 600);
+
+    profiel = new profile();
+}
+
+//Dingen tekenen
+
+function draw() {
+    background(52);
+    
+    vierkant.show();
+
+    for (i of objects) {
+        i.show();
+    }
+
+    if (mouseIsPressed) {
+        graphics.stroke(255);
+        graphics.strokeWeight(5)
+        graphics.line(mouseX, mouseY, beginX, beginY);
+        beginX = mouseX;
+        beginY = mouseY;
+    }
+    
+    image(graphics, 0, 0);
+
+    line(0, profiel.y, 800, profiel.y);
+}
+
+function mousePressed() {
+    beginX = mouseX;
+    beginY = mouseY;
+}
+
+function mouseClicked() {
+    //objects.push(new rect_object(beginX, beginY, mouseX - beginX, mouseY - beginY));
+    //profiel.addObject(new rect_object(beginX, beginY, mouseX - beginX, mouseY - beginY));
+}
 
 // balk code ------------------------------------------------------------------------------
 /*
@@ -114,7 +170,7 @@ function draw() {
 }
 */
 
-
+/*
 // Profiel Code -------------------------------------------------------------------------
 let beginX = 0;
 let beginY = 0;
@@ -165,3 +221,4 @@ function mouseClicked() {
     objects.push(new rect_object(beginX, beginY, mouseX - beginX, mouseY - beginY));
     profiel.addObject(new rect_object(beginX, beginY, mouseX - beginX, mouseY - beginY));
 }
+*/

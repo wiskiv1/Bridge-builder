@@ -6,7 +6,11 @@ class object{ // todo add color/style options
     constructor(x, y) {
         this.posX = x;
         this.posY = y;
-        this.style = null;
+        this.style = {
+                stroke: [0, 0, 0],
+                strokeWeight: 0,
+                fill: [255, 255, 255]
+            };
     }
 
     setStyle(design) {
