@@ -211,18 +211,6 @@ class designer_scene extends Scene {
                     let r = Math.sqrt(difx*difx + dify*dify);
                     circle(this.beginX, this.beginY, Math.round(2 * r));
                     break;
-                case "freeS":
-                    this.graphic.strokeWeight(15);
-                    this.graphic.line(mouseX - 120, mouseY - 45, this.beginX - 120, this.beginY - 45);
-                    this.beginX = mouseX;
-                    this.beginY = mouseY;
-                    break;
-                case "freeB":
-                    this.graphic.strokeWeight(40);
-                    this.graphic.line(mouseX - 120, mouseY - 45, this.beginX - 120, this.beginY - 45);
-                    this.beginX = mouseX;
-                    this.beginY = mouseY;
-                    break;
             }
         }
         pop();
@@ -259,21 +247,21 @@ class designer_scene extends Scene {
         rect(5, 115, 110, 30);
         fill(255);
         text("circle", 10, 130);
-        //freeS
-        fill(51);
-        rect(5, 150, 110, 60);
-        fill(255);
-        text("free draw \nsmall", 10, 180);
-        //freeB
+        
+        // fill(51);
+        // rect(5, 150, 110, 60);
+        // fill(255);
+        // text("", 10, 180);
+        //undo
         fill(51);
         rect(5, 215, 110, 60);
         fill(255);
-        text("free draw \nlarge", 10, 245);
-        //gom
+        text("undo \nshape", 10, 245);
+        //clear
         fill(51);
         rect(5, 280, 110, 30);
         fill(255);
-        text("eraser", 10, 295);
+        text("clear", 10, 295);
 
         fill(51);
         //rect(5, 315, 110, 30);
@@ -336,9 +324,9 @@ class designer_scene extends Scene {
         } else if (mouseX > 5 && mouseX < 115 && mouseY > 150 && mouseY < 210) {
             //this.tool = "freeS";
         } else if (mouseX > 5 && mouseX < 115 && mouseY > 215 && mouseY < 275) {
-            //this.tool = "freeB";
+            profiel.undo();
         } else if (mouseX > 5 && mouseX < 115 && mouseY > 280 && mouseY < 310) {
-            //TODO implement eraser
+            profiel = new profile();
         }
 
         else if (mouseX > 5 && mouseX < 115 && mouseY > 350 && mouseY < 410) {

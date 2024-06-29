@@ -15,6 +15,12 @@ class profile {
         }
     }
 
+    undo() {
+        if (this.#objects.length > 0) {
+            this.#objects.pop();
+        }
+    }
+
     calculate_Ixx() { // Ixx = som Ixx + A*d^2
         if (this.#objects.length == 0) {return;} // do nothing
 
@@ -74,7 +80,7 @@ class profile {
     getArea() {
         let temp = 0;
         for (let i of this.#objects) {
-            temp += i.area;
+            temp += Math.abs(i.area);
         }
         return temp;
     }
