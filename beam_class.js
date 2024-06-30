@@ -12,7 +12,7 @@ class beam {
     force2 = 0;
 
     schaal = 10; // pixels per meter
-    profielSchaal = 100; // alles wat van het profiel komt is in pixels en moet omgezet worden
+    profielSchaal = 200; // alles wat van het profiel komt is in pixels en moet omgezet worden
     safety = 1;
 
     tension_graph = null;

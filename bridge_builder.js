@@ -47,7 +47,7 @@ function preload() {
 function setup() {
     createCanvas(800,600);
 
-    toneelmeester.setActiveScene(1);
+    toneelmeester.setActiveScene(2);
 }
 
 function draw() {
